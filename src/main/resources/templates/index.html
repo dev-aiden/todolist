@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
+  <title>To Do list</title>
+  <style>
+    .container {
+      max-width: 100%;
+    }
+    .card {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row mt-5 justify-content-center">
+    <div class="col-9">
+      <div style="text-align: right; margin-bottom: 5px">
+        <button type="button" class="btn btn-outline-primary"><i class="fa fa-plus-square-o" aria-hidden="true"></i> 할 일 추가</button>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title" style="text-align: center">To Do</h5>
+            </div>
+          </div>
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-9">
+                  <h5 class="card-title">To Do Title</h5>
+                </div>
+                <div class="col-3" style="text-align: right">
+                  <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                </div>
+              </div>
+              <p class="card-text">To Do Contents</p>
+              <div style="text-align: center">
+                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title" style="text-align: center">Working</h5>
+            </div>
+          </div>
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-9">
+                  <h5 class="card-title">Working Title</h5>
+                </div>
+                <div class="col-3" style="text-align: right">
+                  <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                </div>
+              </div>
+              <p class="card-text">Working Contents</p>
+              <div style="text-align: center">
+                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title" style="text-align: center">Done</h5>
+            </div>
+          </div>
+          <div class="card" style="width: 100%;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-9">
+                  <h5 class="card-title">Done Title</h5>
+                </div>
+                <div class="col-3" style="text-align: right">
+                  <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                </div>
+              </div>
+              <p class="card-text">Done Contents</p>
+              <div style="text-align: center">
+                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
