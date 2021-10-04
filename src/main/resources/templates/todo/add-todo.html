@@ -8,14 +8,14 @@
             <div class="py-5 text-center">
                 <h2>할 일 추가</h2>
             </div>
-            <form th:action="@{/}" method="post">
+            <form th:action="@{/add}" th:object="${addToDoForm}" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">제목</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="제목을 입력하세요">
                 </div>
                 <div class="mb-3">
                     <label for="contents" class="form-label">내용</label>
-                    <textarea class="form-control" id="contents" name="contents" rows="3"></textarea>
+                    <textarea class="form-control" id="contents" th:field="*{contents}" rows="3"></textarea>
                 </div>
                 <hr class="my-4">
                 <div class="row">

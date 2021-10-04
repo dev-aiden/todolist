@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter @EqualsAndHashCode(of = "id")
 @Builder @AllArgsConstructor @NoArgsConstructor
+@Table(name = "todo")
 public class ToDo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,4 +16,7 @@ public class ToDo {
     private String title;
 
     private String contents;
+
+    @Enumerated(EnumType.STRING)
+    private ToDoStatus status;
 }
