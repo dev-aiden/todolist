@@ -1,25 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
-  <title>To Do list</title>
-  <style>
-    .container {
-      max-width: 100%;
-    }
-    .card {
-      margin-bottom: 5px;
-    }
-  </style>
-</head>
+<head th:replace="fragments.html :: head"></head>
 <body>
 <div class="container">
   <div class="row mt-5 justify-content-center">
     <div class="col-9">
       <div style="text-align: right; margin-bottom: 5px">
-        <button type="button" class="btn btn-outline-primary"><i class="fa fa-plus-square-o" aria-hidden="true"></i> 할 일 추가</button>
+        <button type="button" class="btn btn-outline-primary" th:onclick="|location.href='@{/add}'|">
+          <i class="fa fa-plus-square-o" aria-hidden="true"></i> 할 일 추가
+        </button>
       </div>
       <div class="row">
         <div class="col-4">
@@ -99,6 +88,5 @@
     </div>
   </div>
 </div>
-<script src="/static/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

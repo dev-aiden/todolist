@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments.html :: head"></head>
+<body>
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-6">
+            <div class="py-5 text-center">
+                <h2>할 일 추가</h2>
+            </div>
+            <form th:action="@{/}" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">제목</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
+                </div>
+                <div class="mb-3">
+                    <label for="contents" class="form-label">내용</label>
+                    <textarea class="form-control" id="contents" name="contents" rows="3"></textarea>
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col">
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">추가</button>
+                    </div>
+                    <div class="col">
+                        <button class="w-100 btn btn-secondary btn-lg" th:onclick="|location.href='@{/}'|" type="button">취소</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
