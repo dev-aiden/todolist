@@ -13,6 +13,14 @@ public class ToDoController {
 
     private final ToDoService toDoService;
 
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("toDoList", toDoService.getToDos(ToDoStatus.TODO));
+        model.addAttribute("workingList", toDoService.getToDos(ToDoStatus.WORKING));
+        model.addAttribute("doneList", toDoService.getToDos(ToDoStatus.DONE));
+        return "index";
+    }
+
     @GetMapping("/add")
     public String addToDoForm(Model model) {
         model.addAttribute(new AddToDoForm());

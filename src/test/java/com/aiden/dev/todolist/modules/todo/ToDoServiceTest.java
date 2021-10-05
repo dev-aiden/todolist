@@ -26,4 +26,14 @@ class ToDoServiceTest {
         // then
         verify(toDoRepository).save(any(ToDo.class));
     }
+
+    @DisplayName("상태로 할 일 목록 조회 테스트")
+    @Test
+    void getToDos() {
+        // when
+        toDoService.getToDos(ToDoStatus.TODO);
+
+        // then
+        verify(toDoRepository).findByStatus(any(ToDoStatus.class));
+    }
 }

@@ -17,7 +17,19 @@ class ToDoControllerTest {
 
     @Autowired MockMvc mockMvc;
     @MockBean ToDoService toDoService;
-    
+
+    @DisplayName("index 페이지 테스트")
+    @Test
+    void home() throws Exception {
+        mockMvc.perform(get("/"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"))
+                .andExpect(model().attributeExists("toDoList"))
+                .andExpect(model().attributeExists("workingList"))
+                .andExpect(model().attributeExists("doneList"));
+    }
+
     @DisplayName("할 일 추가 페이지 보이는지 테스트")
     @Test
     void addToDoForm() throws Exception {

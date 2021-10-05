@@ -15,6 +15,7 @@ public class ToDo {
 
     private String title;
 
+    @Lob
     private String contents;
 
     @Enumerated(EnumType.STRING)

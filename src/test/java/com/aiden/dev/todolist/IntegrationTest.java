@@ -1,6 +1,7 @@
 package com.aiden.dev.todolist;
 
 import com.aiden.dev.todolist.modules.todo.ToDoRepository;
+import com.aiden.dev.todolist.modules.todo.ToDoService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,19 @@ public class IntegrationTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired ToDoRepository toDoRepository;
+    @Autowired ToDoService toDoService;
+
+    @DisplayName("index 페이지 보이는지 테스트")
+    @Test
+    void home() throws Exception {
+        mockMvc.perform(get("/"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"))
+                .andExpect(model().attributeExists("toDoList"))
+                .andExpect(model().attributeExists("workingList"))
+                .andExpect(model().attributeExists("doneList"));
+    }
 
     @DisplayName("할 일 추가 페이지 보이는지 테스트")
     @Test

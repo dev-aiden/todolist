@@ -17,20 +17,22 @@
               <h5 class="card-title" style="text-align: center">To Do</h5>
             </div>
           </div>
-          <div class="card" style="width: 100%;">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-9">
-                  <h5 class="card-title">To Do Title</h5>
+          <div th:each="toDo : ${toDoList}">
+            <div class="card" style="width: 100%;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-9">
+                    <h5 class="card-title" th:text="${toDo.title}"></h5>
+                  </div>
+                  <div class="col-3" style="text-align: right">
+                    <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                  </div>
                 </div>
-                <div class="col-3" style="text-align: right">
-                  <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                  <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                <p class="card-text" th:text="${toDo.contents}"></p>
+                <div style="text-align: center">
+                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                 </div>
-              </div>
-              <p class="card-text">To Do Contents</p>
-              <div style="text-align: center">
-                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
@@ -41,21 +43,23 @@
               <h5 class="card-title" style="text-align: center">Working</h5>
             </div>
           </div>
-          <div class="card" style="width: 100%;">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-9">
-                  <h5 class="card-title">Working Title</h5>
+          <div th:each="working : ${workingList}">
+            <div class="card" style="width: 100%;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-9">
+                    <h5 class="card-title" th:text="${working.title}"></h5>
+                  </div>
+                  <div class="col-3" style="text-align: right">
+                    <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                  </div>
                 </div>
-                <div class="col-3" style="text-align: right">
-                  <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                  <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                <p class="card-text" th:text="${working.contents}"></p>
+                <div style="text-align: center">
+                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                 </div>
-              </div>
-              <p class="card-text">Working Contents</p>
-              <div style="text-align: center">
-                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
@@ -66,20 +70,22 @@
               <h5 class="card-title" style="text-align: center">Done</h5>
             </div>
           </div>
-          <div class="card" style="width: 100%;">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-9">
-                  <h5 class="card-title">Done Title</h5>
+          <div th:each="done : ${doneList}">
+            <div class="card" style="width: 100%;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-9">
+                    <h5 class="card-title" th:text="${done.title}"></h5>
+                  </div>
+                  <div class="col-3" style="text-align: right">
+                    <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                  </div>
                 </div>
-                <div class="col-3" style="text-align: right">
-                  <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                  <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                <p class="card-text" th:text="${done.title}"></p>
+                <div style="text-align: center">
+                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
                 </div>
-              </div>
-              <p class="card-text">Done Contents</p>
-              <div style="text-align: center">
-                <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
