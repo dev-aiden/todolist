@@ -5,10 +5,14 @@ spring:
     password: 1234
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 logging:
   level:
     org:

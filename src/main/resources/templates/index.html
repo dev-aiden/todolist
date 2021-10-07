@@ -31,7 +31,11 @@
                 </div>
                 <p class="card-text" th:text="${toDo.contents}"></p>
                 <div style="text-align: center">
-                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  <form class="needs-validation col-sm-6" th:action="@{/move-right/{toDoId} (toDoId=${toDo.id})}" th:method="put" style="width: 100%">
+                    <button type="submit" class="btn btn-danger">
+                      <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -57,8 +61,18 @@
                 </div>
                 <p class="card-text" th:text="${working.contents}"></p>
                 <div style="text-align: center">
-                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                  <div class="row">
+                    <form class="needs-validation col-sm-6" th:action="@{/move-left/{toDoId} (toDoId=${working.id})}" th:method="put">
+                      <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                      </button>
+                    </form>
+                    <form class="needs-validation col-sm-6" th:action="@{/move-right/{toDoId} (toDoId=${working.id})}" th:method="put">
+                      <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -84,7 +98,11 @@
                 </div>
                 <p class="card-text" th:text="${done.title}"></p>
                 <div style="text-align: center">
-                  <button type="button" class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                  <form class="needs-validation col-sm-6" th:action="@{/move-left/{toDoId} (toDoId=${done.id})}" th:method="put" style="width: 100%">
+                    <button type="submit" class="btn btn-danger">
+                      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>

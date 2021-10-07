@@ -7,8 +7,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -49,5 +51,29 @@ class ToDoControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
+
+        verify(toDoService, times(1)).addToDo(any());
+    }
+
+    @DisplayName("이전 상태로 이동 테스트")
+    @Test
+    void moveLeft() throws Exception {
+        mockMvc.perform(put("/move-left/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        verify(toDoService, times(1)).updateToDoLeft(1L);
+    }
+
+    @DisplayName("다음 상태로 이동 테스트")
+    @Test
+    void moveRight() throws Exception {
+        mockMvc.perform(put("/move-right/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        verify(toDoService, times(1)).updateToDoRight(1L);
     }
 }
