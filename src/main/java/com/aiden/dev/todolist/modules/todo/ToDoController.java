@@ -4,10 +4,7 @@ import com.aiden.dev.todolist.modules.todo.form.AddToDoForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,6 +41,18 @@ public class ToDoController {
     @PutMapping("/move-right/{toDoId}")
     public String moveRight(@PathVariable Long toDoId) {
         toDoService.updateToDoRight(toDoId);
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete/{toDoId}")
+    public String deleteToDoForm(@PathVariable Long toDoId) {
+        toDoService.getToDo(toDoId);
+        return "todo/delete-todo";
+    }
+
+    @DeleteMapping("/delete/{toDoId}")
+    public String deleteToDo(@PathVariable Long toDoId) {
+        toDoService.deleteDoTo(toDoId);
         return "redirect:/";
     }
 }

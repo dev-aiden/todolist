@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,7 +28,7 @@ public class ToDoService {
     }
 
     public void updateToDoLeft(Long toDoId) {
-        ToDo toDo = toDoRepository.findById(toDoId).orElseThrow(() -> new IllegalArgumentException(toDoId + "에 해당하는 ToDo가 존재하지 않습니다."));
+        ToDo toDo = getToDo(toDoId);
         ToDoStatus leftStatus = toDo.getStatus();
         if(leftStatus == ToDoStatus.WORKING) {
             leftStatus = ToDoStatus.TODO;
@@ -40,7 +39,7 @@ public class ToDoService {
     }
 
     public void updateToDoRight(Long toDoId) {
-        ToDo toDo = toDoRepository.findById(toDoId).orElseThrow(() -> new IllegalArgumentException(toDoId + "에 해당하는 ToDo가 존재하지 않습니다."));
+        ToDo toDo = getToDo(toDoId);
         ToDoStatus rightStatus = toDo.getStatus();
         if(rightStatus == ToDoStatus.TODO) {
             rightStatus = ToDoStatus.WORKING;
@@ -48,5 +47,14 @@ public class ToDoService {
             rightStatus = ToDoStatus.DONE;
         }
         toDo.setStatus(rightStatus);
+    }
+
+    public void deleteDoTo(Long toDoId) {
+        ToDo toDo = getToDo(toDoId);
+        toDoRepository.delete(toDo);
+    }
+
+    public ToDo getToDo(Long toDoId) {
+        return toDoRepository.findById(toDoId).orElseThrow(() -> new IllegalArgumentException(toDoId + "에 해당하는 ToDo가 존재하지 않습니다."));
     }
 }

@@ -63,7 +63,7 @@ class ToDoControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
 
-        verify(toDoService, times(1)).updateToDoLeft(1L);
+        verify(toDoService).updateToDoLeft(1L);
     }
 
     @DisplayName("다음 상태로 이동 테스트")
@@ -74,6 +74,28 @@ class ToDoControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
 
-        verify(toDoService, times(1)).updateToDoRight(1L);
+        verify(toDoService).updateToDoRight(1L);
+    }
+
+    @DisplayName("할 일 삭제 페이지 보이는지 테스트")
+    @Test
+    void deleteToDoForm() throws Exception {
+        mockMvc.perform(get("/delete/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("todo/delete-todo"));
+
+        verify(toDoService).getToDo(1L);
+    }
+
+    @DisplayName("할 일 삭제 테스트")
+    @Test
+    void deleteToDo() throws Exception {
+        mockMvc.perform(delete("/delete/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        verify(toDoService).deleteDoTo(1L);
     }
 }

@@ -111,4 +111,37 @@ class ToDoServiceTest {
         toDoService.updateToDoRight(1L);
         assertThat(toDo.getStatus()).isEqualTo(ToDoStatus.DONE);
     }
+
+    @DisplayName("할 일 삭제 테스트 - 존재하지 않는 ID")
+    @Test
+    void deleteToDo_not_exist_id() {
+        // when, then
+        assertThrows(IllegalArgumentException.class, () -> toDoService.deleteDoTo(1L));
+    }
+
+    @DisplayName("할 일 삭제 테스트")
+    @Test
+    void deleteToDo() {
+        // given
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .status(ToDoStatus.TODO)
+                .build();
+
+        given(toDoRepository.findById(any())).willReturn(Optional.of(toDo));
+
+        // when
+        toDoService.deleteDoTo(1L);
+
+        // then
+        verify(toDoRepository).delete(any(ToDo.class));
+    }
+    
+    @DisplayName("할 일 가져오기 테스트 - 존재하지 않는 경우")
+    @Test
+    void getToDo_not_exist() {
+        // when, then
+        assertThrows(IllegalArgumentException.class, () -> toDoService.getToDo(1L));
+    }
 }

@@ -25,8 +25,12 @@
                     <h5 class="card-title" th:text="${toDo.title}"></h5>
                   </div>
                   <div class="col-3" style="text-align: right">
-                    <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    <a class="text-decoration-none text-black" th:href="@{|/edit/${toDo.id}|}">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="text-decoration-none text-black" th:href="@{|/delete/${toDo.id}|}">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
                   </div>
                 </div>
                 <p class="card-text" th:text="${toDo.contents}"></p>
@@ -55,8 +59,12 @@
                     <h5 class="card-title" th:text="${working.title}"></h5>
                   </div>
                   <div class="col-3" style="text-align: right">
-                    <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    <a class="text-decoration-none text-black" th:href="@{|/edit/${working.id}|}">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="text-decoration-none text-black" th:href="@{|/delete/${working.id}|}">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
                   </div>
                 </div>
                 <p class="card-text" th:text="${working.contents}"></p>
@@ -92,8 +100,12 @@
                     <h5 class="card-title" th:text="${done.title}"></h5>
                   </div>
                   <div class="col-3" style="text-align: right">
-                    <a class="text-decoration-none text-black"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    <a class="text-decoration-none text-black"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    <a class="text-decoration-none text-black" th:href="@{|/edit/${done.id}|}">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </a>
+                    <a class="text-decoration-none text-black" th:href="@{|/delete/${done.id}|}">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
                   </div>
                 </div>
                 <p class="card-text" th:text="${done.title}"></p>

@@ -69,7 +69,7 @@ public class IntegrationTest {
     @DisplayName("이전 상태로 이동 테스트 - 존재하지 않는 ID")
     @Test
     void moveLeft_not_exist_id() throws Exception {
-        // when
+        // when, then
         assertThrows(NestedServletException.class, () -> {
             mockMvc.perform(put("/move-left/1"))
                     .andDo(print())
@@ -123,7 +123,7 @@ public class IntegrationTest {
     @DisplayName("다음 상태로 이동 테스트 - 존재하지 않는 ID")
     @Test
     void moveRight_not_exist_id() throws Exception {
-        // when
+        // when, then
         assertThrows(NestedServletException.class, () -> {
             mockMvc.perform(put("/move-right/1"))
                     .andDo(print())
@@ -172,5 +172,68 @@ public class IntegrationTest {
 
         // then
         assertThat(toDoRepository.findById(savedToDo.getId()).get().getStatus()).isEqualTo(ToDoStatus.WORKING);
+    }
+
+    @DisplayName("할 일 삭제 페이지 이동 테스트 - 존재하지 않는 ID")
+    @Test
+    void deleteToDoForm_not_exist_id() {
+        // when, then
+        assertThrows(NestedServletException.class, () -> {
+            mockMvc.perform(get("/delete/1"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(view().name("todo/delete-todo"));
+        });
+    }
+
+    @DisplayName("할 일 삭제 페이지 이동 테스트")
+    @Test
+    void deleteToDoForm() throws Exception {
+        // given
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .status(ToDoStatus.TODO)
+                .build();
+        ToDo savedToDo = toDoRepository.save(toDo);
+
+        // when
+        mockMvc.perform(get("/delete/" + savedToDo.getId()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("todo/delete-todo"));
+    }
+
+    @DisplayName("할 일 삭제 테스트 - 존재하지 않는 ID")
+    @Test
+    void deleteToDo_not_exist_id() {
+        // when, then
+        assertThrows(NestedServletException.class, () -> {
+            mockMvc.perform(delete("/delete/1"))
+                    .andDo(print())
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/"));
+        });
+    }
+
+    @DisplayName("할 일 삭제 테스트")
+    @Test
+    void deleteToDo() throws Exception {
+        // given
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .status(ToDoStatus.TODO)
+                .build();
+        ToDo savedToDo = toDoRepository.save(toDo);
+
+        // when
+        mockMvc.perform(delete("/delete/" + savedToDo.getId()))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        // then
+        assertThat(toDoRepository.findById(savedToDo.getId()).isPresent()).isFalse();
     }
 }
