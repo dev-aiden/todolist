@@ -1,5 +1,6 @@
 package com.aiden.dev.todolist.modules.todo;
 
+import com.aiden.dev.todolist.modules.todo.form.AddToDoForm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -97,5 +99,41 @@ class ToDoControllerTest {
                 .andExpect(redirectedUrl("/"));
 
         verify(toDoService).deleteDoTo(1L);
+    }
+
+    @DisplayName("할 일 수정 페이지 보이는지 테스트")
+    @Test
+    void editToDoForm() throws Exception {
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .build();
+
+        given(toDoService.getToDo(any())).willReturn(toDo);
+
+        mockMvc.perform(get("/edit/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("todo/edit-todo"))
+                .andExpect(model().attributeExists("addToDoForm"));
+
+        verify(toDoService).getToDo(1L);
+    }
+
+    @DisplayName("할 일 수정 테스트")
+    @Test
+    void editToDo() throws Exception {
+        AddToDoForm addToDoForm = new AddToDoForm();
+        addToDoForm.setTitle("title");
+        addToDoForm.setContents("contents");
+
+        mockMvc.perform(put("/edit/1")
+                        .param("title", addToDoForm.getTitle())
+                        .param("contents", addToDoForm.getContents()))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        verify(toDoService).updateToDo(1L, addToDoForm);
     }
 }

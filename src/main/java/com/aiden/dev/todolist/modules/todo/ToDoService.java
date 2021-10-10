@@ -57,4 +57,10 @@ public class ToDoService {
     public ToDo getToDo(Long toDoId) {
         return toDoRepository.findById(toDoId).orElseThrow(() -> new IllegalArgumentException(toDoId + "에 해당하는 ToDo가 존재하지 않습니다."));
     }
+
+    public void updateToDo(Long toDoId, AddToDoForm addToDoForm) {
+        ToDo toDo = getToDo(toDoId);
+        toDo.setTitle(addToDoForm.getTitle());
+        toDo.setContents(addToDoForm.getContents());
+    }
 }

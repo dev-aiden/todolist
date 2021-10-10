@@ -13,8 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.NestedServletException;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -68,14 +66,13 @@ public class IntegrationTest {
 
     @DisplayName("이전 상태로 이동 테스트 - 존재하지 않는 ID")
     @Test
-    void moveLeft_not_exist_id() throws Exception {
+    void moveLeft_not_exist_id() {
         // when, then
-        assertThrows(NestedServletException.class, () -> {
-            mockMvc.perform(put("/move-left/1"))
-                    .andDo(print())
-                    .andExpect(status().is3xxRedirection())
-                    .andExpect(redirectedUrl("/"));
-        });
+        assertThrows(NestedServletException.class, () ->
+                mockMvc.perform(put("/move-left/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/")));
     }
 
     @DisplayName("이전 상태로 이동 테스트 - TODO 상태인 경우 상태 유지")
@@ -122,14 +119,13 @@ public class IntegrationTest {
 
     @DisplayName("다음 상태로 이동 테스트 - 존재하지 않는 ID")
     @Test
-    void moveRight_not_exist_id() throws Exception {
+    void moveRight_not_exist_id() {
         // when, then
-        assertThrows(NestedServletException.class, () -> {
-            mockMvc.perform(put("/move-right/1"))
-                    .andDo(print())
-                    .andExpect(status().is3xxRedirection())
-                    .andExpect(redirectedUrl("/"));
-        });
+        assertThrows(NestedServletException.class, () ->
+                mockMvc.perform(put("/move-right/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/")));
     }
 
     @DisplayName("다음 상태로 이동 테스트 - DONE 상태인 경우 상태 유지")
@@ -178,12 +174,11 @@ public class IntegrationTest {
     @Test
     void deleteToDoForm_not_exist_id() {
         // when, then
-        assertThrows(NestedServletException.class, () -> {
-            mockMvc.perform(get("/delete/1"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(view().name("todo/delete-todo"));
-        });
+        assertThrows(NestedServletException.class, () ->
+                mockMvc.perform(get("/delete/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("todo/delete-todo")));
     }
 
     @DisplayName("할 일 삭제 페이지 이동 테스트")
@@ -208,12 +203,11 @@ public class IntegrationTest {
     @Test
     void deleteToDo_not_exist_id() {
         // when, then
-        assertThrows(NestedServletException.class, () -> {
-            mockMvc.perform(delete("/delete/1"))
-                    .andDo(print())
-                    .andExpect(status().is3xxRedirection())
-                    .andExpect(redirectedUrl("/"));
-        });
+        assertThrows(NestedServletException.class, () ->
+                mockMvc.perform(delete("/delete/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/")));
     }
 
     @DisplayName("할 일 삭제 테스트")
@@ -235,5 +229,70 @@ public class IntegrationTest {
 
         // then
         assertThat(toDoRepository.findById(savedToDo.getId()).isPresent()).isFalse();
+    }
+
+    @DisplayName("할 일 수정 페이지 이동 테스트 - 존재하지 않는 ID")
+    @Test
+    void editToDoForm_not_exist_id() {
+        // when, then
+        assertThrows(NestedServletException.class, () ->
+                mockMvc.perform(get("/edit/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("todo/edit-todo")));
+    }
+
+    @DisplayName("할 일 수정 페이지 이동 테스트")
+    @Test
+    void editToDoForm() throws Exception {
+        // given
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .status(ToDoStatus.TODO)
+                .build();
+        ToDo savedToDo = toDoRepository.save(toDo);
+
+        // when
+        mockMvc.perform(get("/edit/" + savedToDo.getId()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("todo/edit-todo"));
+    }
+
+    @DisplayName("할 일 수정 테스트 - 존재하지 않는 ID")
+    @Test
+    void editToDo_not_exist_id() {
+        // when, then
+        assertThrows(NestedServletException.class, () ->
+                mockMvc.perform(put("/edit/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/")));
+    }
+
+    @DisplayName("할 일 수정 테스트")
+    @Test
+    void editToDo() throws Exception {
+        // given
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .status(ToDoStatus.TODO)
+                .build();
+        ToDo savedToDo = toDoRepository.save(toDo);
+
+        // when
+        mockMvc.perform(put("/edit/" + savedToDo.getId())
+                        .param("title", "title2")
+                        .param("contents", "contents2"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        // then
+        ToDo updatedToDo = toDoRepository.findById(savedToDo.getId()).get();
+        assertThat(updatedToDo.getTitle()).isEqualTo("title2");
+        assertThat(updatedToDo.getContents()).isEqualTo("contents2");
     }
 }

@@ -144,4 +144,54 @@ class ToDoServiceTest {
         // when, then
         assertThrows(IllegalArgumentException.class, () -> toDoService.getToDo(1L));
     }
+
+    @DisplayName("할 일 가져오기 테스트")
+    @Test
+    void getToDo() {
+        // given
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .status(ToDoStatus.TODO)
+                .build();
+
+        given(toDoRepository.findById(any())).willReturn(Optional.of(toDo));
+
+        // when
+        ToDo savedToDo = toDoService.getToDo(1L);
+
+        // then
+        assertThat(savedToDo).isEqualTo(toDo);
+    }
+
+    @DisplayName("할 일 수정 테스트 - 존재하지 않는 경우")
+    @Test
+    void updateToDo_not_exist() {
+        // when, then
+        assertThrows(IllegalArgumentException.class, () -> toDoService.updateToDo(1L, new AddToDoForm()));
+    }
+
+    @DisplayName("할 일 수정 테스트")
+    @Test
+    void updateToDo() {
+        // given
+        ToDo toDo = ToDo.builder()
+                .title("title")
+                .contents("contents")
+                .status(ToDoStatus.TODO)
+                .build();
+
+        AddToDoForm addToDoForm = new AddToDoForm();
+        addToDoForm.setTitle("title2");
+        addToDoForm.setContents("contents2");
+
+        given(toDoRepository.findById(any())).willReturn(Optional.of(toDo));
+
+        // when
+        toDoService.updateToDo(1L, addToDoForm);
+
+        // then
+        assertThat(toDo.getTitle()).isEqualTo("title2");
+        assertThat(toDo.getContents()).isEqualTo("contents2");
+    }
 }

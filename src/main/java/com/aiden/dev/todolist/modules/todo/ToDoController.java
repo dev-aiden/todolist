@@ -55,4 +55,20 @@ public class ToDoController {
         toDoService.deleteDoTo(toDoId);
         return "redirect:/";
     }
+
+    @GetMapping("/edit/{toDoId}")
+    public String editToDoForm(@PathVariable Long toDoId, Model model) {
+        ToDo toDo = toDoService.getToDo(toDoId);
+        AddToDoForm addToDoForm = new AddToDoForm();
+        addToDoForm.setTitle(toDo.getTitle());
+        addToDoForm.setContents(toDo.getContents());
+        model.addAttribute(addToDoForm);
+        return "todo/edit-todo";
+    }
+
+    @PutMapping("/edit/{toDoId}")
+    public String editToDo(@PathVariable Long toDoId, AddToDoForm addToDoForm) {
+        toDoService.updateToDo(toDoId, addToDoForm);
+        return "redirect:/";
+    }
 }
